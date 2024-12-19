@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+</head>
+<body>
+    <!-- Game Section -->
+    <div class="container">
+        <h1>Number Guessing Game</h1>
+        <p>Guess a number between 1 and 100</p>
+
+        <div class="game-info">
+            <p id="feedback">Enter a number to begin!</p>
+            <p>Attempts: <span id="attempts">0</span></p>
+        </div>
+
+        <input type="number" id="guess" placeholder="Your guess" min="1" max="100">
+        <button id="guessBtn">Guess</button>
+        <button id="newGameBtn" style="display:none;">New Game</button>
+    </div>
+
+    <!-- Christmas Tree Section -->
+    <div class="tree-container">
+        <div class="tree">
+            <div class="tree-layer"></div>
+            <div class="tree-layer"></div>
+            <div class="tree-layer"></div>
+            <div class="tree-layer"></div>
+        </div>
+        <div class="tree-trunk"></div>
+        <div class="ornaments">
+            <div class="ornament" style="top: 40px; left: 25px;"></div>
+            <div class="ornament" style="top: 90px; left: 55px;"></div>
+            <div class="ornament" style="top: 60px; left: 70px;"></div>
+            <div class="ornament" style="top: 30px; left: 50px;"></div>
+            <div class="ornament" style="top: 10px; left: 70px;"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+  <!-- Styling -->
+<style> 
+    /* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #964949;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+ }
+ 
+ 
+ .container {
+    background-color: #eee56e;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+ }
+ 
+ 
+ h1 {
+    font-size: 24px;
+    color: #333;
+ }
+ 
+ 
+ p {
+    font-size: 18px;
+    color: #555;
+ }
+ 
+ 
+ #feedback {
+    font-size: 16px;
+    font-weight: bold;
+    color: #dc4c3c;
+ }
+ 
+ 
+ button {
+    font-size: 16px;
+    padding: 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+ }
+ 
+ 
+ button:hover {
+    background-color: #2980b9;
+ }
+ 
+ 
+ input {
+    font-size: 16px;
+    padding: 10px;
+    border: 2px solid #3498db;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 10px;
+ }
+ 
+ 
+ button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+ }
+ 
+ 
+ 
+ 
+ /* christmas tree */
+ body {
+    background-color:#964949;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+ }
+ 
+ 
+ .tree-container {
+    position: relative;
+    width: 200px;
+ }
+ 
+ 
+ .tree {
+    position: Left;
+    margin-bottom: 20px;
+    width: 100%;
+    height: 200px;
+ }
+ 
+ 
+ .tree-layer {
+    background-color: #083a0b;
+    height: 40px;
+    border-radius: 20px;
+    margin: 10px auto;
+    width: 80%;
+    transform-origin: center;
+ }
+ 
+ 
+ .tree-layer:nth-child(1) {
+    transform: translateX(-10px);
+ }
+ .tree-layer:nth-child(2) {
+    transform: translateX(-20px);
+ }
+ .tree-layer:nth-child(3) {
+    transform: translateX(-30px);
+ }
+ .tree-layer:nth-child(4) {
+    transform: translateX(-40px);
+ }
+ 
+ 
+ .tree-trunk {
+    background-color: #2e221e;
+    width: 40px;
+    height: 50px;
+    margin: 0 auto;
+ }
+ 
+ 
+ .ornaments {
+    position: left;
+    top: 10px;
+    left: 10px;
+ }
+ 
+ 
+ .ornament {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1);
+ }
+ 
+ 
+ .ornament:nth-child(1) {
+    background-color: gold;
+ }
+ .ornament:nth-child(2) {
+    background-color: blue;
+ }
+ .ornament:nth-child(3) {
+    background-color: pink;
+ }
+ .ornament:nth-child(4) {
+    background-color: silver;
+ }
+ .ornament:nth-child(5) {
+    background-color: green;
+ }
+ 
+</style>
+
+
+  <!-- Java Script -->
+<script>
+    let randomNumber;
+let attempts = 0;
+
+const feedback = document.getElementById('feedback');
+const attemptsDisplay = document.getElementById('attempts');
+const guessInput = document.getElementById('guess');
+const guessButton = document.getElementById('guessBtn');
+const newGameButton = document.getElementById('newGameBtn');
+
+// Function to start a new game
+function startNewGame() {
+    randomNumber = Math.floor(Math.random() * 100) + 1; // Random number between 1 and 100
+    attempts = 0;
+    attemptsDisplay.textContent = attempts;
+    feedback.textContent = "Guess a number between 1 and 100.";
+    guessInput.value = '';  // Clear the input field
+    guessButton.disabled = false;
+    newGameButton.style.display = "none";  // Hide New Game button
+    guessInput.disabled = false;  // Enable input
+}
+
+// Function to check the player's guess
+function checkGuess() {
+    const userGuess = Number(guessInput.value);
+
+    // Validate input
+    if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+        feedback.textContent = "Please enter a valid number between 1 and 100.";
+        return;
+    }
+
+    attempts++;  // Increase attempt count
+    attemptsDisplay.textContent = attempts;
+
+    // Check if the guess is correct
+    if (userGuess < randomNumber) {
+        feedback.textContent = "Too low! Try again.";
+    } else if (userGuess > randomNumber) {
+        feedback.textContent = "Too high! Try again.";
+    } else {
+        feedback.textContent = "Correct! Well done!";
+        guessButton.disabled = true;  // Disable guess button after correct answer
+        newGameButton.style.display = "block";  // Show New Game button
+        guessInput.disabled = true;  // Disable input
+    }
+}
+
+// Event listeners for guess button and new game button
+guessButton.addEventListener('click', checkGuess);
+newGameButton.addEventListener('click', startNewGame);
+
+// Start a new game when the page loads
+startNewGame();
+</script>
